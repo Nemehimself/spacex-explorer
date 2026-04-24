@@ -71,3 +71,25 @@ export async function fetchLaunchById(id: string): Promise<Launch> {
   const { data } = await spacexClient.get<Launch>(`/launches/${id}`);
   return data;
 }
+
+// Fetch ALL launches for charting (no pagination — one POST, limit 9999)
+export async function fetchAllLaunchesForCharts(): Promise<Launch[]> {
+  const { data } = await spacexClient.post<PaginatedResponse<Launch>>(
+    "/launches/query",
+    {
+      query: {},
+      options: {
+        select: {
+          name: 1,
+          date_utc: 1,
+          success: 1,
+          upcoming: 1,
+          flight_number: 1,
+        },
+        limit: 9999,
+        sort: { date_utc: 1 },
+      },
+    }
+  );
+  return data.docs;
+}

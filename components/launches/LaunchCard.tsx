@@ -25,6 +25,20 @@ function StatusBadge({
   return <span className="badge badge-neutral">Unknown</span>;
 }
 
+/**
+ * A single launch card for the virtualized list.
+ *
+ * Wrapped in React.memo() to prevent re-renders when sibling cards
+ * update (e.g. a different card's favorite is toggled).
+ *
+ * The favorite toggle button calls e.preventDefault() to stop the
+ * wrapping <Link> from navigating when the star is clicked.
+ *
+ * @param launch           - Full Launch object from SpaceX API
+ * @param isFavorite       - Whether this launch is in the user's favorites
+ * @param onToggleFavorite - Stable callback (useCallback) from parent
+ */
+
 export const LaunchCard = memo(function LaunchCard({
   launch,
   isFavorite,

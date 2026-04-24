@@ -16,6 +16,21 @@ interface LaunchVirtualListProps {
   onToggleFavorite: (id: string) => void;
 }
 
+/**
+ * Virtualised infinite-scroll list of launch cards.
+ *
+ * Uses @tanstack/react-virtual to render only the DOM nodes currently
+ * visible in the viewport (~10 nodes vs 200+ without virtualisation).
+ *
+ * The "load more" trigger uses IntersectionObserver on a sentinel div
+ * at the bottom of the list. When the sentinel enters the viewport
+ * (with a 300px root margin), fetchNextPage() is called automatically.
+ *
+ * NOTE: This component is opted out of the React Compiler's auto-memoisation
+ * via "use no memo" because useVirtualizer returns functions that cannot
+ * be safely memoised (TanStack Virtual recommendation).
+ */
+
 export function LaunchVirtualList({
   launches,
   isFetchingNextPage,

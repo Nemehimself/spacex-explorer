@@ -1,3 +1,15 @@
+/**
+ * SSR-safe localStorage helpers for persisting favorite launch IDs.
+ *
+ * All functions guard against:
+ * - Server-side rendering (window is undefined on the server)
+ * - localStorage quota errors (silent fail with console.warn)
+ * - JSON parse errors from corrupted storage (returns empty array)
+ *
+ * Storage key: "spacex_favorites"
+ * Storage format: JSON array of launch ID strings, e.g. ["abc123", "def456"]
+ */
+
 const FAVORITES_KEY = "spacex_favorites";
 
 export function getFavorites(): string[] {

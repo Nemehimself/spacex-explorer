@@ -9,6 +9,18 @@ import {
 } from "@/types/pagination";
 import { DEFAULT_PAGE_SIZE } from "@/lib/constants";
 
+/**
+ * Builds the POST body for /launches/query based on active filters.
+ *
+ * Uses MongoDB-style query operators supported by the SpaceX API:
+ * - $regex / $options for case-insensitive name search
+ * - $gte / $lte for date range filtering
+ *
+ * @param filters - Active filter state from LaunchFilters component
+ * @param page    - 1-based page number for pagination cursor
+ * @returns       - SpaceX query body ready to POST
+ */
+
 function buildLaunchQuery(
   filters: LaunchFilters,
   page: number
@@ -55,6 +67,15 @@ function buildLaunchQuery(
   };
 }
 
+/**
+ * Fetches a paginated, filtered, sorted page of launches.
+ * Called by useInfiniteQuery — do not call directly in components.
+ *
+ * @param filters - Active user-selected filters
+ * @param page    - Page number (1-indexed)
+ * @returns       - Paginated response including hasNextPage cursor
+ */
+
 export async function fetchLaunches(
   filters: LaunchFilters,
   page: number
@@ -71,6 +92,16 @@ export async function fetchLaunchById(id: string): Promise<Launch> {
   const { data } = await spacexClient.get<Launch>(`/launches/${id}`);
   return data;
 }
+
+/**
+ * Fetches ALL launches in a single request for chart aggregation.
+ *
+ * Uses a select projection to return only the 5 fields needed for charts,
+ * keeping the payload small (~40KB vs ~500KB for full objects).
+ * Cached for 1 hour — historical launch data is immutable.
+ *
+ * Do NOT use this for the launch list — use fetchLaunches() instead.
+ */
 
 // Fetch ALL launches for charting (no pagination — one POST, limit 9999)
 export async function fetchAllLaunchesForCharts(): Promise<Launch[]> {

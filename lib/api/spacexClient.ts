@@ -5,6 +5,18 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/**
+ * Creates a configured Axios instance for the SpaceX REST API v4.
+ *
+ * Features:
+ * - Base URL set to https://api.spacexdata.com/v4
+ * - 10 second request timeout
+ * - Automatic retry with exponential backoff on:
+ *   - 429 Too Many Requests
+ *   - Any 5xx server error
+ * - Max 3 retry attempts (delays: 1s → 2s → 4s)
+ */
+
 function createSpaceXClient(): AxiosInstance {
   const client = axios.create({
     baseURL: SPACEX_API_BASE,

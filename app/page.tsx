@@ -43,7 +43,7 @@ export default function LaunchesPage() {
       <div style={{ marginBottom: "2rem" }}>
         <h1 style={{ marginBottom: "0.35rem" }}>Mission Archive</h1>
         <p style={{ color: "var(--text-secondary)", fontSize: "1rem" }}>
-          Every SpaceX launch — filterable, searchable, bookmarkable.
+          Every SpaceX launch - filterable, searchable, bookmarkable.
         </p>
       </div>
 

@@ -1,7 +1,6 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { fetchLaunches } from "@/lib/api/launches";
-import { LaunchFilters, PaginatedResponse } from "@/types/pagination";
-import { Launch } from "@/types/launch";
+import { LaunchFilters } from "@/types/pagination";
 import { QUERY_KEYS } from "@/lib/constants";
 
 /**
@@ -20,13 +19,11 @@ import { QUERY_KEYS } from "@/lib/constants";
  * const allLaunches = data?.pages.flatMap(page => page.docs) ?? [];
  */
 
-export function useInfiniteLaunches(filters: LaunchFilters) {
-  return useInfiniteQuery<PaginatedResponse<Launch>, Error>({
-    queryKey: [QUERY_KEYS.launches, filters],
-    queryFn: ({ pageParam }) => fetchLaunches(filters, pageParam as number),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage) =>
-      lastPage.hasNextPage ? lastPage.nextPage : undefined,
+export function useLaunches(filters: LaunchFilters, page: number) {
+  return useQuery({
+    queryKey: [QUERY_KEYS.launches, filters, page],
+    queryFn: () => fetchLaunches(filters, page),
     staleTime: 1000 * 60 * 5,
+    placeholderData: (prev) => prev, // keeps previous page visible while next loads
   });
 }

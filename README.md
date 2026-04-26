@@ -6,8 +6,6 @@ A production-grade frontend application built with **Next.js 15**, **TypeScript*
 
 ## Live Demo
 
-> Add your deployed URL here (e.g. Vercel)
-
 ---
 
 ## How to Run
@@ -77,7 +75,8 @@ spacex-explorer/
 │   ├── launches/
 │   │   ├── LaunchCard.tsx
 │   │   ├── LaunchFilters.tsx
-│   │   └── LaunchVirtualList.tsx
+│   │   ├── Launchlist.tsx
+│   │   └── Pagination.tsx
 │   ├── detail/
 │   │   ├── RocketCard.tsx
 │   │   ├── LaunchpadCard.tsx

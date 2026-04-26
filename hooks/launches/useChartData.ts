@@ -10,10 +10,10 @@ interface YearStat {
   successRate: number;
 }
 
-interface RocketStat {
-  name: string;       // flight number bucket label
-  launches: number;
-}
+// interface RocketStat {
+//   name: string;       // flight number bucket label
+//   launches: number;
+// }
 
 function buildYearStats(launches: Launch[]): YearStat[] {
   const map = new Map<string, { total: number; success: number; failed: number }>();

@@ -12,10 +12,10 @@ interface LaunchFiltersProps {
   onChange: (updated: Partial<FiltersType>) => void;
 }
 
-const DEFAULT_FILTERS: FiltersType = {
-  sortField: "date_utc",
-  sortDirection: "desc",
-};
+// const DEFAULT_FILTERS: FiltersType = {
+//   sortField: "date_utc",
+//   sortDirection: "desc",
+// };
 
 function isFiltersActive(filters: FiltersType): boolean {
   return Boolean(
